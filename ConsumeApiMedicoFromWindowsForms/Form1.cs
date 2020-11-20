@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ConsumeApiMedicoFromWindowsForms.CapaDatos;
+using ConsumeApiMedicoFromWindowsForms.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +17,22 @@ namespace ConsumeApiMedicoFromWindowsForms
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            ListarDoctores();
+        }
+
+        public async void ListarDoctores()
+        {
+            DoctorDAL oDoctorDAL = new DoctorDAL();
+            List<DoctorModel> model = await oDoctorDAL.listarDoctor();
+            dgvDoctor.DataSource = model;
+            for (int i = 6; i < dgvDoctor.Columns.Count; i++)
+            {
+                dgvDoctor.Columns[i].Visible = false;
+            }
         }
     }
 }
