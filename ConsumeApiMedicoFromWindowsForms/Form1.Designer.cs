@@ -44,6 +44,8 @@
             this.dgvDoctor.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvDoctor.Location = new System.Drawing.Point(0, 0);
             this.dgvDoctor.Name = "dgvDoctor";
+            this.dgvDoctor.ReadOnly = true;
+            this.dgvDoctor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvDoctor.Size = new System.Drawing.Size(634, 377);
             this.dgvDoctor.TabIndex = 0;
             // 
@@ -65,12 +67,14 @@
             this.toolStripNuevo.Name = "toolStripNuevo";
             this.toolStripNuevo.Size = new System.Drawing.Size(42, 22);
             this.toolStripNuevo.Text = "Nuevo";
+            this.toolStripNuevo.Click += new System.EventHandler(this.toolStripNuevo_Click);
             // 
             // toolStripEditar
             // 
             this.toolStripEditar.Name = "toolStripEditar";
             this.toolStripEditar.Size = new System.Drawing.Size(37, 22);
             this.toolStripEditar.Text = "Editar";
+            this.toolStripEditar.Click += new System.EventHandler(this.toolStripEditar_Click);
             // 
             // toolStripEliminar
             // 

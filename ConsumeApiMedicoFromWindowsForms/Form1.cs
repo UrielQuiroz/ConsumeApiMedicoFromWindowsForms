@@ -14,6 +14,7 @@ namespace ConsumeApiMedicoFromWindowsForms
 {
     public partial class Form1 : Form
     {
+
         public Form1()
         {
             InitializeComponent();
@@ -33,6 +34,21 @@ namespace ConsumeApiMedicoFromWindowsForms
             {
                 dgvDoctor.Columns[i].Visible = false;
             }
+        }
+
+        private void toolStripNuevo_Click(object sender, EventArgs e)
+        {
+            FRMPopupDoctor frm = new FRMPopupDoctor();
+            frm.IdDoctor = 0;
+            frm.ShowDialog();
+        }
+
+        private void toolStripEditar_Click(object sender, EventArgs e)
+        {
+            FRMPopupDoctor frm = new FRMPopupDoctor();
+            int idDoc = (int) dgvDoctor.CurrentRow.Cells[0].Value;
+            frm.IdDoctor = idDoc; 
+            frm.ShowDialog();
         }
     }
 }
