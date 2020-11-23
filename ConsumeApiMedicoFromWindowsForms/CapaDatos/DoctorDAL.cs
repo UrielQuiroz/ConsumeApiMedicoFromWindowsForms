@@ -82,5 +82,28 @@ namespace ConsumeApiMedicoFromWindowsForms.CapaDatos
             return model;
         }
 
+
+        public async Task<int> eliminarDoctor(int idDoctor)
+        {
+            int rpta = 0;
+            HttpClient client = new HttpClient();
+            string url = "http://192.168.100.221:8081/Api/Doctor/?IdDoctor=" + idDoctor;
+            DoctorModel model = new DoctorModel
+            {
+                IdDoctor = idDoctor
+            };
+            var jsonRequest = JsonConvert.SerializeObject(model);
+            var content = new StringContent(jsonRequest, Encoding.UTF8, "text/json");
+            HttpResponseMessage response = await client.PutAsync(url, content);
+
+            if (response != null)
+            {
+                string rptaCadena = await response.Content.ReadAsStringAsync();
+                rpta = int.Parse(rptaCadena);
+            }
+
+            return rpta;
+        }
+
     }
 }

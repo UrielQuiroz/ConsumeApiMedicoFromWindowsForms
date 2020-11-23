@@ -21,11 +21,11 @@ namespace ConsumeApiMedicoFromWindowsForms.Models
         public string nombre { get; set; }
         public string ApPaterno { get; set; }
         public string ApMaterno { get; set; }
-        public string Foto { get; set; }
+        public string Archivo { get; set; }
         public string nombreArchivo { get; set; }
         public int IdClinica { get; set; }
         public int IdEspecialidad { get; set; }
-        public int IdSexo { get; set; }
+        public int Sexo { get; set; }
         public decimal Sueldo { get; set; }
         public string celular { get; set; }
     }

@@ -46,9 +46,25 @@ namespace ConsumeApiMedicoFromWindowsForms
         private void toolStripEditar_Click(object sender, EventArgs e)
         {
             FRMPopupDoctor frm = new FRMPopupDoctor();
-            int idDoc = (int) dgvDoctor.CurrentRow.Cells[0].Value;
-            frm.IdDoctor = idDoc; 
+            frm.IdDoctor = (int) dgvDoctor.CurrentRow.Cells[0].Value;
             frm.ShowDialog();
+        }
+
+        private async void toolStripEliminar_Click(object sender, EventArgs e)
+        {
+            int idDoc = (int) dgvDoctor.CurrentRow.Cells[0].Value;
+            DoctorDAL DAL = new DoctorDAL();
+            int rpta = await DAL.eliminarDoctor(idDoc);
+
+            if (rpta == 1)
+            {
+                MessageBox.Show("Se elimino correctamente");
+                ListarDoctores();
+            }
+            else
+            {
+                MessageBox.Show("Ocurrio un error!");
+            }
         }
     }
 }
