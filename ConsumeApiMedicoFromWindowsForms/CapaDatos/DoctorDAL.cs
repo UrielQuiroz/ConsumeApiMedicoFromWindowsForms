@@ -105,5 +105,32 @@ namespace ConsumeApiMedicoFromWindowsForms.CapaDatos
             return rpta;
         }
 
+
+
+        public async Task<int> AddEditDoctor(DoctorModel model)
+        {
+            int rpta = 0;
+            try
+            {
+                HttpClient client = new HttpClient();
+                string url = "http://192.168.100.221:8081/Api/Doctor";
+                var jsonRequest = JsonConvert.SerializeObject(model);
+                var content = new StringContent(jsonRequest, Encoding.UTF8, "text/json");
+                HttpResponseMessage response = await client.PostAsync(url, content);
+
+                if (response != null)
+                {
+                    string rptaCadena = await response.Content.ReadAsStringAsync();
+                    rpta = int.Parse(rptaCadena);
+                }
+            }
+            catch (Exception ex)
+            {
+                rpta = 0;
+            }
+
+            return rpta;
+        }
+
     }
 }

@@ -113,5 +113,80 @@ namespace ConsumeApiMedicoFromWindowsForms
                 pbFoto.Image = Image.FromStream(ms);
             }
         }
+
+        private async void btnAceptar_Click(object sender, EventArgs e)
+        {
+            bool exito = true;
+            if (txtNombre.Text == ""){ errorDatos.SetError(txtNombre, "Ingresar nombre"); exito = false; } else{ errorDatos.SetError(txtNombre, ""); }
+            if (txtApPaterno.Text == ""){ errorDatos.SetError(txtApPaterno, "Ingresar Apellido Paterno"); exito = false; } else{ errorDatos.SetError(txtApPaterno, ""); }
+            if (txtApMaterno.Text == ""){ errorDatos.SetError(txtApMaterno, "Ingresar Apellido Materno"); exito = false; } else{ errorDatos.SetError(txtApMaterno, ""); }
+            if ((int)cboClinica.SelectedValue == 0){ errorDatos.SetError(cboClinica, "Seleccione una clinica"); exito = false; } else{ errorDatos.SetError(cboClinica, ""); }
+            if ((int)cboEspecialidad.SelectedValue == 0){ errorDatos.SetError(cboEspecialidad, "Seleccione una especialidad"); exito = false; } else{ errorDatos.SetError(cboEspecialidad, ""); }
+            if (txtSueldo.Text == "") { errorDatos.SetError(txtSueldo, "Ingresar Sueldo"); exito = false; } else { errorDatos.SetError(txtSueldo, ""); }
+
+            if (exito == false)
+            {
+                this.DialogResult = DialogResult.None;
+                return;
+            }
+
+            DoctorDAL DAL = new DoctorDAL();
+            DoctorModel model = new DoctorModel();
+            model.IdDoctor = int.Parse(txtId.Text);
+            model.nombre = txtNombre.Text;
+            model.ApPaterno = txtApPaterno.Text;
+            model.ApMaterno = txtApMaterno.Text;
+            model.IdClinica = (int) cboClinica.SelectedValue;
+            model.IdEspecialidad = (int) cboEspecialidad.SelectedValue;
+            model.Email = txtEmail.Text;
+            model.celular = txtCelular.Text;
+            model.BHABILITADO = 1;
+
+            if (rbMasculino.Checked == true)
+            {
+                model.Sexo = 1;
+            }
+            else if (rbFemenino.Checked == true)
+            {
+                model.Sexo = 2;
+            }
+
+            model.Sueldo = decimal.Parse(txtSueldo.Text);
+
+            if (dtpFechaContrato.Value == null)
+            {
+                model.FechaContrato = DateTime.Now;
+            }
+            else
+            {
+                model.FechaContrato = dtpFechaContrato.Value;
+            }
+
+
+            byte[] buffer;
+            Image img = pbFoto.Image;
+            if (img != null)
+            {
+                MemoryStream ms = new MemoryStream();
+                img.Save(ms, img.RawFormat);
+                buffer = ms.ToArray();
+                string fotoBase64 = Convert.ToBase64String(buffer);
+                string extension = Path.GetExtension(nombreArchivo).Substring(1);
+                model.Archivo = "data:image" + extension + ";base64," + fotoBase64;
+                model.nombreArchivo = nombreArchivo;
+            }
+
+            int rpta = await DAL.AddEditDoctor(model);
+            if (rpta == 1)
+            {
+                MessageBox.Show("Se guardo correctamente");
+                this.DialogResult = DialogResult.OK;
+            }
+            else
+            {
+                MessageBox.Show("Ocurrio un error");
+                this.DialogResult = DialogResult.None;
+            }
+        }
     }
 }

@@ -28,5 +28,7 @@ namespace ConsumeApiMedicoFromWindowsForms.Models
         public int Sexo { get; set; }
         public decimal Sueldo { get; set; }
         public string celular { get; set; }
+
+        public int BHABILITADO { get; set; }
     }
 }

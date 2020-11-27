@@ -41,13 +41,22 @@ namespace ConsumeApiMedicoFromWindowsForms
             FRMPopupDoctor frm = new FRMPopupDoctor();
             frm.IdDoctor = 0;
             frm.ShowDialog();
+            if (frm.DialogResult.Equals(DialogResult.OK))
+            {
+                ListarDoctores();
+            }
         }
 
         private void toolStripEditar_Click(object sender, EventArgs e)
         {
             FRMPopupDoctor frm = new FRMPopupDoctor();
-            frm.IdDoctor = (int) dgvDoctor.CurrentRow.Cells[0].Value;
+            int idDoc = (int) dgvDoctor.CurrentRow.Cells[0].Value;
+            frm.IdDoctor = idDoc;
             frm.ShowDialog();
+            if (frm.DialogResult.Equals(DialogResult.OK))
+            {
+                ListarDoctores();
+            }
         }
 
         private async void toolStripEliminar_Click(object sender, EventArgs e)
